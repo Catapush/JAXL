@@ -241,7 +241,7 @@ class JAXL extends XMPPStream
             $transport,
             $jid,
             $this->cfg['pass'],
-            $this->cfg['resource'] !== null ? 'jaxl#'.$this->cfg['resource'] : 'jaxl#'.md5(time()),
+            $this->cfg['resource'] !== null ? $this->cfg['resource'] : 'jaxl#'.md5(time()),
             $this->cfg['force_tls']
         );
     }
@@ -684,7 +684,7 @@ class JAXL extends XMPPStream
         
         $this->send_auth_pkt(
             $pref_auth,
-            isset($this->jid) ? $this->jid->to_string() : null,
+            isset($this->jid) ? $this->jid->node: null,
             $this->pass
         );
 
@@ -734,6 +734,8 @@ class JAXL extends XMPPStream
             $this->ev->emit('on_stanza_id_'.$stanza->id, array($stanza));
         }
         
+//        JAXLLogger::debug("on stanza id nessuna callback per id: " . 'on_stanza_id_'.$stanza->id);
+
         // catch roster list
         if ($stanza->type == 'result' && ($query = $stanza->exists('query', 'jabber:iq:roster'))) {
             foreach ($query->children as $child) {
