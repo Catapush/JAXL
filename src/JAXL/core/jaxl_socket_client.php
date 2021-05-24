@@ -56,7 +56,8 @@ class JAXLSocketClient implements JAXLClientBase
 
     public $errno = null;
     public $errstr = null;
-    private $timeout = 10;
+    // TODO: move to config
+    private $timeout = 5;
 
     private $ibuffer = "";
     private $obuffer = "";
