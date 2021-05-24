@@ -482,9 +482,10 @@ class JAXL extends XMPPStream
             $this->ev->emit('on_disconnect');
         } else {
             // If connection to the destination fails.
-            if ($this->trans->errno == 61 ||
-                $this->trans->errno == 110 ||
-                $this->trans->errno == 111
+            if ( 0
+//                $this->trans->errno == 61 ||
+//                $this->trans->errno == 110 ||  Connection timed out
+//                $this->trans->errno == 111
             ) {
                 JAXLLogger::debug("unable to connect with errno ".$this->trans->errno." (".$this->trans->errstr.")");
                 $this->retry();
