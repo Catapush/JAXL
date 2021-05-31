@@ -784,7 +784,7 @@ class JAXL extends XMPPStream
         
         // if managing roster
         // catch available/unavailable type stanza
-        if ($this->manage_roster) {
+        if (isset($this->manage_roster) && $this->manage_roster) {
             $type = ($stanza->type ? $stanza->type : "available");
             $jid = new XMPPJid($stanza->from);
             
