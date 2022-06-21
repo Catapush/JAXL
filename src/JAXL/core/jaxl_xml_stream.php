@@ -81,8 +81,15 @@ class JAXLXmlStream
 
     public function reset_parser()
     {
-        $this->parse_final(null);
+        // PHP 8.0 break with "xml_parse(): Passing null to parameter #2 ($data) of type string is deprecated"
+        if (!(version_compare(PHP_VERSION, '8.0.0') >= 0)) {
+            // skipping this line in PHP 8.0
+            $this->parse_final(null);
+        }
         @xml_parser_free($this->parser);
+        // add unset to avoid memory leak as described in the PHP doc
+        // https://www.php.net/manual/en/function.xml-parser-free.php
+        unset($this->parser);
         $this->parser = null;
         $this->init_parser();
     }
