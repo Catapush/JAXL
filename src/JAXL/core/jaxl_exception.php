@@ -68,7 +68,9 @@ class JAXLException extends Exception
         register_shutdown_function(array('JAXLException', 'shutdown_handler'));
     }
 
-    public static function error_handler($errno, $error, $file, $line, $vars)
+    // added null to vars, in PHP 8.0 it generate the error:
+    // Too few arguments to function JAXLException::error_handler(), 4 passed and exactly 5 expected
+    public static function error_handler($errno, $error, $file, $line, $vars = null)
     {
         JAXLLogger::debug("error handler called with $errno, $error, $file, $line");
         if ($errno === 0 || ($errno & error_reporting()) === 0) {
@@ -80,7 +82,8 @@ class JAXLException extends Exception
 
     public static function exception_handler($e)
     {
-        JAXLLogger::debug("exception handler catched ".json_encode($e));
+        // in PHP 8 json_encode doesn't work with object(ArgumentCountError) move to print_r
+        JAXLLogger::debug("exception handler catched ".print_r($e, true));
 
         // TODO: Pretty print backtrace
         //print_r(debug_backtrace());
