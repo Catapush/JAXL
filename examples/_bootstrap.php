@@ -3,7 +3,7 @@
  * Bootstrap for examples.
  */
 
-error_reporting(E_ALL | E_STRICT);
+error_reporting(E_ALL);
 
 if (PHP_SAPI !== 'cli') {
     echo 'Warning: script should be invoked via the CLI version of PHP, not the '.PHP_SAPI.' SAPI'.PHP_EOL;
